@@ -133,7 +133,7 @@ function cookieList(store) {
   var ulist = document.createElement('ul');
   list.appendChild(ulist);
 
-  for (var i = 0; i < store.results.length; i++) {
+  for (var j = 0; j < store.results.length; j++) {
     var listItem = document.createElement('li');
     listItem.textContent = store.businessHours[i] + ': ' + store.results[i];
     ulist.appendChild(listItem);
@@ -144,6 +144,10 @@ function cookieList(store) {
   // ulist.appendChild(footer);
   // console.log(total1);
 }
-cookieList(firstAndPike, seaTacAirport, seattleCenter, capitolHill, alki);
+cookieList(firstAndPike);
 console.log (firstAndPike.avgCookiesPurchase());
 console.log (firstAndPike);
+
+cookieList(seattleCenter);
+console.log (seattleCenter.avgCookiesPurchase());
+console.log (seattleCenter);
