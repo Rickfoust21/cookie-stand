@@ -163,7 +163,7 @@ function updateStoreOption(){
   }
 }
 
-
+console.log(tableFooter);
 var finalTotal = 0;
 
 var pike = new Location('1st and Pike',23, 65, 6.3);
