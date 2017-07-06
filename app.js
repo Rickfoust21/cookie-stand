@@ -22,7 +22,7 @@ Location.prototype.tableRow = function(){
     var hourlyCookiesCell = document.createElement('td');
 
     hourlyCookiesCell.textContent = this.hourlyCookies[i];
-    tableDataRow.appendChild(hourlyCookiesCell);
+    tableDataRow.appendChild(hourlyCookies);
   }
   var dailyTotalCell = document.createElement('td');
 
@@ -32,6 +32,7 @@ Location.prototype.tableRow = function(){
 };
 
 Location.prototype.employeeRow = function(){
+
 
   var employeeTableRowEl = document.createElement('tr');
   var employeeTableCellEl = document.createElement('td');
@@ -55,6 +56,7 @@ function salmonTosser(location){
     tosserPerHour = Math.ceil((location.hourlyCookies[i]) / 20);
     if(tosserPerHour === 1){
       tosserPerHour += 1;
+
     }
     salmonTosserHours.push(tosserPerHour);
   }
@@ -71,6 +73,7 @@ function randomizedCookieHours(location){
   var hourlyCookies = [];
   for(var i = 0; i < location.openHours.length; i++){
     hourlyCookies.push(randomizedCookie(location.minCustomers, location.maxCustomers, location.cookieAverage));
+
   }
   return hourlyCookies;
 }
@@ -80,16 +83,19 @@ function dailyTotal(location){
   var total = 0;
   for(var i = 0; i < location.hourlyCookies.length; i++){
     total += location.hourlyCookies[i];
+
   }
   finalTotal += total; ///Total for all cookies at all locations
   return total;
 }
+
 
 function printTable(){
   tableHead(locationArray[0].openHours);
   tableBody = document.createElement('tbody');
   tableBody.setAttribute('id', 'table-body');
   tableEl.appendChild(tableBody);
+
 
   for(var i = 0; i < locationArray.length; i++){
     locationArray[i].tableRow(locationArray[i]);
@@ -117,6 +123,13 @@ function tableHead(hours){
     tableHeaderCell.textContent = hours[i];
     tableHeaderRow.appendChild(tableHeaderCell);
 
+var list = document.getElementById('HourlyCookieSales');
+function cookieList(store) {
+  var header = document.createElement('h2');
+  header.textContent = store.storeName;
+  list.appendChild(header);
+
+
     var employeeHeaderCell = document.createElement('th');
     employeeHeaderCell.textContent = hours[i];
     employeeHeaderRow.appendChild(employeeHeaderCell);
@@ -135,7 +148,7 @@ function tableFooter(){
   var tfootEl = document.createElement('tfoot');
   var tfootCell = document.createElement('th');
   var tfootTotal = document.createElement('th');
-
+  
   tfootTotal.textContent = finalTotal;
   tfootCell.textContent = 'Total Cookies';
   tfootEl.appendChild(tfootCell);
@@ -207,3 +220,9 @@ function handleSubmit(event) {
   locationArray[index].minCustomers = min;
   locationArray[index].maxCustomers = max;
   locationArray[index].cookieAverage = cookieAverage; }
+
+
+
+
+
+
