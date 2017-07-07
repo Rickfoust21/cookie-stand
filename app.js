@@ -22,7 +22,7 @@ Location.prototype.tableRow = function(){
     var hourlyCookiesCell = document.createElement('td');
 
     hourlyCookiesCell.textContent = this.hourlyCookies[i];
-    tableDataRow.appendChild(hourlyCookies);
+    tableDataRow.appendChild(hourlyCookiesCell);
   }
   var dailyTotalCell = document.createElement('td');
 
@@ -61,7 +61,7 @@ function salmonTosser(location){
     salmonTosserHours.push(tosserPerHour);
   }
   return salmonTosserHours;
-}
+};
 
 function randomizedCookie(min, max, cookies) {
   var customers = Math.floor(Math.random() * (max - min + 1) + min);
@@ -123,17 +123,19 @@ function tableHead(hours){
     tableHeaderCell.textContent = hours[i];
     tableHeaderRow.appendChild(tableHeaderCell);
 
-var list = document.getElementById('HourlyCookieSales');
-function cookieList(store) {
-  var header = document.createElement('h2');
-  header.textContent = store.storeName;
-  list.appendChild(header);
+    var list = document.getElementById('HourlyCookieSales');
+    function cookieList(store) {
+      var header = document.createElement('h2');
+      header.textContent = store.storeName;
+      list.appendChild(header);
 
 
-    var employeeHeaderCell = document.createElement('th');
-    employeeHeaderCell.textContent = hours[i];
-    employeeHeaderRow.appendChild(employeeHeaderCell);
+      var employeeHeaderCell = document.createElement('th');
+      employeeHeaderCell.textContent = hours[i];
+      employeeHeaderRow.appendChild(employeeHeaderCell);
+    }
   }
+  // cookieList(locationArray);
   var tableHeaderTotal = document.createElement('th');
   tableHeaderTotal.textContent = 'Daily Total';
   tableHeaderRow.appendChild(tableHeaderTotal);
@@ -144,85 +146,81 @@ function cookieList(store) {
   tableHeader.appendChild(tableHeaderRow);
 }
 
-function tableFooter(){
-  var tfootEl = document.createElement('tfoot');
-  var tfootCell = document.createElement('th');
-  var tfootTotal = document.createElement('th');
-  
-  tfootTotal.textContent = finalTotal;
-  tfootCell.textContent = 'Total Cookies';
-  tfootEl.appendChild(tfootCell);
+  function tableFooter(){
+    var tfootEl = document.createElement('tfoot');
+    var tfootCell = document.createElement('th');
+    var tfootTotal = document.createElement('th');
 
-  for(var i = 0; i < locationArray[0].openHours.length; i++){
-    var tableFooterTotalEl = document.createElement('th');
-    tableFooterTotalEl.textContent = columnTotal(i);
-    tfootEl.appendChild(tableFooterTotalEl);
+    tfootTotal.textContent = finalTotal;
+    tfootCell.textContent = 'Total Cookies';
+    tfootEl.appendChild(tfootCell);
+
+    for(var i = 0; i < locationArray[0].openHours.length; i++){
+      var tableFooterTotalEl = document.createElement('th');
+      tableFooterTotalEl.textContent = columnTotal(i);
+      tfootEl.appendChild(tableFooterTotalEl);
+    }
+    tfootEl.appendChild(tfootTotal);
+    tableEl.appendChild(tfootEl);
   }
-  tfootEl.appendChild(tfootTotal);
-  tableEl.appendChild(tfootEl);
-}
 
-function columnTotal(hour){
-  var total = 0;
-  for(var i = 0; i < locationArray.length; i++){
-    total += locationArray[i].hourlyCookies[hour];
+  function columnTotal(hour){
+    var total = 0;
+    for(var i = 0; i < locationArray.length; i++){
+      total += locationArray[i].hourlyCookies[hour];
+    }
+    return total;
   }
-  return total;
-}
 
-function updateStoreOption(){
-  for(var i = 0; i < locationArray.length; i++){
-    storeNameOption.innerHTML += '<option value="option' + i + '">' + locationArray[i].name + '</option>';
-  }
-}
-
-console.log(tableFooter);
-var finalTotal = 0;
-
-var pike = new Location('1st and Pike',23, 65, 6.3);
-var seaTac = new Location('SeaTac Airport', 3, 24, 1.2);
-var seattleCenter = new Location('Seattle Center', 11, 38, 3.7);
-var capitolHill = new Location('Capitol Hill', 20,	38,	2.3);
-var alki = new Location('Alki', 2, 16, 4.6);
-
-
-var locationArray = [pike, seaTac, seattleCenter, capitolHill, alki];
-console.log(locationArray);
-
-var storeNameOption = document.getElementById('storeName');
-var tableEl = document.getElementById('location-table');
-var employeeTable = document.getElementById('employee-table');
-var employeeTableBody = document.getElementById('employee-table-body');
-var tableBody;
-
-printTable();
-updateStoreOption();
-
-var formEl = document.getElementById('form');
-formEl.addEventListener('submit', handleSubmit);
-
-function handleSubmit(event) {
-  event.preventDefault();
-  console.log(event.target.store.value);
-  var store = event.target.store.value;
-  var min = event.target.min.value;
-  var max = event.target.max.value;
-  var cookieAverage = event.target.cookieAverage.value;
-  var index = -1;
-
-  for(var i = 0; i < locationArray.length; i++){
-    if(locationArray[i].name === store){
-      console.log('Updating an already existing item');
-      index = i;
+  function updateStoreOption(){
+    for(var i = 0; i < locationArray.length; i++){
+      storeNameOption.innerHTML += '<option value="option' + i + '">' + locationArray[i].name + '</option>';
     }
   }
-  locationArray[index].name = store;
-  locationArray[index].minCustomers = min;
-  locationArray[index].maxCustomers = max;
-  locationArray[index].cookieAverage = cookieAverage; }
+
+  console.log(tableFooter);
+  var finalTotal = 0;
+
+  var pike = new Location('1st and Pike',23, 65, 6.3);
+  var seaTac = new Location('SeaTac Airport', 3, 24, 1.2);
+  var seattleCenter = new Location('Seattle Center', 11, 38, 3.7);
+  var capitolHill = new Location('Capitol Hill', 20,	38,	2.3);
+  var alki = new Location('Alki', 2, 16, 4.6);
 
 
+  var locationArray = [pike, seaTac, seattleCenter, capitolHill, alki];
+  console.log(locationArray);
 
+  var storeNameOption = document.getElementById('storeName');
+  var tableEl = document.getElementById('location-table');
+  var employeeTable = document.getElementById('employee-table');
+  var employeeTableBody = document.getElementById('employee-table-body');
+  var tableBody;
 
+  printTable();
+  updateStoreOption();
 
+  var formEl = document.getElementById('form');
+  formEl.addEventListener('submit', handleSubmit);
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log(event.target.store.value);
+    var store = event.target.store.value;
+    var min = event.target.min.value;
+    var max = event.target.max.value;
+    var cookieAverage = event.target.cookieAverage.value;
+    var index = -1;
+
+    for(var i = 0; i < locationArray.length; i++){
+      if(locationArray[i].name === store){
+        console.log('Updating an already existing item');
+        index = i;
+      }
+    }
+
+    locationArray[index].name = store;
+    locationArray[index].minCustomers = min;
+    locationArray[index].maxCustomers = max;
+    locationArray[index].cookieAverage = cookieAverage;
+  }
